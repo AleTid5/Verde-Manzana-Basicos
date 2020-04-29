@@ -26,8 +26,9 @@ const styles = {
   mrAuto,
   cardTitle: {
     ...cardTitle,
-    textAlign: "center",
-    marginBottom: "0px !important"
+    textAlign: "left",
+    marginBottom: "0px !important",
+    minHeight: "8vh !important"
   },
   cardDescription: {
     color: grayColor[0],
@@ -37,7 +38,8 @@ const styles = {
     ...container
   },
   description: {
-    color: grayColor[0]
+    color: grayColor[0],
+    paddingTop: "10px"
   },
   section: {
     ...section,
@@ -93,6 +95,16 @@ const styles = {
   },
   textLeft: {
     textAlign: "left"
+  },
+  bluePill: {
+    width: "40%",
+    height: "18px",
+    backgroundColor: "#3483fa",
+    color: "white",
+    fontSize: "12px",
+    fontWeight: 500,
+    textAlign: "center",
+    borderRadius: "4px"
   }
 };
 
