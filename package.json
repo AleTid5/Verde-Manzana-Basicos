@@ -1,5 +1,5 @@
 {
-  "homepage": "https://verdemanzanabasicos.io/",
+  "homepage": "http://verdemanzanabasicos.io",
   "name": "verde-manzana-basicos",
   "version": "1.8.0",
   "private": true,
@@ -41,6 +41,7 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8"
   },
