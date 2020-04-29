@@ -105,6 +105,23 @@ const styles = {
     fontWeight: 500,
     textAlign: "center",
     borderRadius: "4px"
+  },
+  flex: {
+    display: "flex"
+  },
+  middleWidth: {
+    width: "50%"
+  },
+  textRight: {
+    textAlign: "right",
+    marginTop: "20px"
+  },
+  loaderContainer: {
+    width: "100%",
+    height: "100vh",
+    backgroundColor: "#58585885",
+    position: "absolute",
+    zIndex: 10
   }
 };
 
