@@ -11,6 +11,7 @@ import {
 import customCheckboxRadioSwitch from "assets/jss/material-kit-pro-react/customCheckboxRadioSwitchStyle.js";
 
 import tooltipsStyle from "assets/jss/material-kit-pro-react/tooltipsStyle.js";
+import { primaryColor, successColor } from "assets/jss/material-kit-pro-react";
 
 const styles = {
   ...customCheckboxRadioSwitch,
@@ -26,9 +27,10 @@ const styles = {
   mrAuto,
   cardTitle: {
     ...cardTitle,
-    textAlign: "left",
+    textAlign: "center",
     marginBottom: "0px !important",
-    minHeight: "8vh !important"
+    minHeight: "4vh !important",
+    fontSize: "14px"
   },
   cardDescription: {
     color: grayColor[0],
@@ -39,7 +41,9 @@ const styles = {
   },
   description: {
     color: grayColor[0],
-    paddingTop: "10px"
+    paddingTop: "10px",
+    textAlign: "center",
+    margin: 0
   },
   section: {
     ...section,
@@ -54,6 +58,9 @@ const styles = {
   },
   pullRight: {
     float: "right"
+  },
+  cardBody: {
+    padding: "0.9375rem 1.875rem 0"
   },
   cardHeaderImage: {
     position: "relative",
@@ -96,16 +103,6 @@ const styles = {
   textLeft: {
     textAlign: "left"
   },
-  bluePill: {
-    width: "40%",
-    height: "18px",
-    backgroundColor: "#3483fa",
-    color: "white",
-    fontSize: "12px",
-    fontWeight: 500,
-    textAlign: "center",
-    borderRadius: "4px"
-  },
   flex: {
     display: "flex"
   },
@@ -118,10 +115,49 @@ const styles = {
   },
   loaderContainer: {
     width: "100%",
-    height: "100vh",
-    backgroundColor: "#58585885",
+    height: "100%",
+    backgroundColor: "#000c",
     position: "absolute",
-    zIndex: 10
+    zIndex: 10,
+    color: "white"
+  },
+  loader: {
+    display: "inline-block",
+    position: "relative",
+    width: "80px",
+    height: "80px",
+    marginTop: "30%",
+    left: "45%"
+  },
+  loaderChild1: {
+    position: "absolute",
+    border: "4px solid #fff",
+    opacity: 1,
+    borderRadius: "50%",
+    animation: `$loader 1s cubic-bezier(0, 0.2, 0.8, 1) infinite`
+  },
+  loaderChild2: {
+    animationDelay: "-0.5s"
+  },
+  "@keyframes loader": {
+    "0%": { top: "36px", left: "36px", width: 0, height: 0, opacity: 1 },
+    "100%": { top: 0, left: 0, width: "72px", height: "72px", opacity: 0 }
+  },
+  fetchingProducts: {
+    position: "relative",
+    marginLeft: "calc(45% - 35px)"
+  },
+  blueBadge: {
+    backgroundColor: "#3483fa",
+    padding: "7px 12px"
+  },
+  dropdownLimit: {
+    margin: "25px 0"
+  },
+  radioChecked: {
+    ...customCheckboxRadioSwitch.radioChecked,
+    border: `1px solid ${successColor[0]}`,
+    color: `${successColor[0]} !important`
   }
 };
 

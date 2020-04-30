@@ -6,8 +6,11 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 // @material-ui icons
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import Radio from "@material-ui/core/Radio";
+import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -16,16 +19,19 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
+import Accordion from "components/Accordion/Accordion.js";
 
 // Server
 import { getProducts } from "../../../api/EcommerceServer";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.js";
 import Paginations from "../../../components/Pagination/Pagination";
-import CustomDropdown from "../../../components/CustomDropdown/CustomDropdown";
-import withLoader from "./Loader";
+import Loader from "./Loader";
+import Badge from "../../../components/Badge/Badge";
 
 const useStyles = makeStyles(styles);
+
+const productsRef = React.createRef();
 
 const initialState = {
   pagination: {
@@ -71,7 +77,8 @@ const reducer = (state, action) => {
   }
 };
 
-const SectionProducts = props => {
+const SectionProducts = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   React.useEffect(() => {
@@ -79,8 +86,7 @@ const SectionProducts = props => {
   }, []);
 
   const fetchProducts = (offset = 0, limit = state.pagination.limit) => {
-    console.log(limit);
-    props.setIsLoading(true);
+    setIsLoading(true);
 
     getProducts(offset, limit).then(response => {
       const [products, pagination] = response;
@@ -91,7 +97,7 @@ const SectionProducts = props => {
         pagination
       });
 
-      props.setIsLoading(false);
+      setIsLoading(false);
     });
   };
 
@@ -109,98 +115,204 @@ const SectionProducts = props => {
   return (
     <div className={classes.section}>
       <div className={classes.container}>
-        <div className={classes.flex}>
-          <div className={classes.middleWidth}>
-            <h2>Nuestros productos</h2>
-          </div>
-          <div className={`${classes.middleWidth} ${classes.textRight}`}>
-            <CustomDropdown
-              dropdownHeader="Seleccione la cantidad de productos que desea listar"
-              buttonText={`Productos por pagina (${state.pagination.limit})`}
-              hoverColor="success"
-              buttonProps={{
-                round: true,
-                block: false,
-                color: "success"
-              }}
-              dropPlacement="bottom"
-              dropdownList={[
-                { divider: true },
-                <div key={10} onClick={() => changePaginationLimit(10)}>
-                  10
-                </div>,
-                { divider: true },
-                <div key={20} onClick={() => changePaginationLimit(20)}>
-                  20
-                </div>,
-                { divider: true },
-                <div key={50} onClick={() => changePaginationLimit(50)}>
-                  50
-                </div>,
-                { divider: true },
-                <div key={100} onClick={() => changePaginationLimit(100)}>
-                  100
-                </div>,
-                { divider: true }
-              ]}
-            />
-          </div>
-        </div>
+        <h2 ref={productsRef}>Nuestros productos</h2>
         <GridContainer>
-          <GridItem md={12} sm={12}>
-            <GridContainer>
-              {state.products.map((product, key) => (
-                <GridItem md={3} sm={3} key={key}>
-                  <Card plain product>
-                    <CardHeader image plain>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          src={product.pictures[0].url}
-                          alt="..."
-                          height="200px"
-                        />
-                      </a>
-                      <div
-                        className={classes.coloredShadow}
-                        style={{
-                          backgroundImage: `url(${product.pictures[0].url})`,
-                          opacity: "1"
-                        }}
-                      />
-                    </CardHeader>
-                    <CardBody plain>
-                      <a href={product.permalink}>
-                        <h4 className={classes.cardTitle}>{product.title}</h4>
-                      </a>
-                    </CardBody>
-                    <CardFooter plain className={classes.justifyContentBetween}>
-                      <div className={classes.priceContainer}>
-                        <span className={classes.price}>$ {product.price}</span>
-                      </div>
-                      <div className={classes.bluePill}>Envío normal</div>
-                      <Tooltip
-                        id="tooltip-top"
-                        title="¡Lo quiero!"
-                        placement="left"
-                        classes={{ tooltip: classes.tooltip }}
+          <GridItem md={3} sm={4}>
+            <Card plain>
+              <CardBody className={classes.cardBodyRefine}>
+                <Accordion
+                  active={[0, 2]}
+                  activeColor="success"
+                  collapses={[
+                    {
+                      title: `Productos por pagina (${state.pagination.limit})`,
+                      content: (
+                        <div>
+                          <div
+                            className={
+                              classes.checkboxAndRadio +
+                              " " +
+                              classes.checkboxAndRadioHorizontal
+                            }
+                          >
+                            <FormControlLabel
+                              control={
+                                <Radio
+                                  checked={state.pagination.limit === 10}
+                                  onChange={() => changePaginationLimit(10)}
+                                  value="10"
+                                  name="10 por pagina"
+                                  aria-label="10"
+                                  icon={
+                                    <FiberManualRecord
+                                      className={classes.radioUnchecked}
+                                    />
+                                  }
+                                  checkedIcon={
+                                    <FiberManualRecord
+                                      className={classes.radioChecked}
+                                    />
+                                  }
+                                  classes={{
+                                    checked: classes.radio,
+                                    root: classes.radioRoot
+                                  }}
+                                />
+                              }
+                              classes={{
+                                label: classes.label,
+                                root: classes.labelRoot
+                              }}
+                              label="10 productos"
+                            />
+                          </div>
+                          <div
+                            className={
+                              classes.checkboxAndRadio +
+                              " " +
+                              classes.checkboxAndRadioHorizontal
+                            }
+                          >
+                            <FormControlLabel
+                              control={
+                                <Radio
+                                  checked={state.pagination.limit === 20}
+                                  onChange={() => changePaginationLimit(20)}
+                                  value="20"
+                                  name="20 por pagina"
+                                  aria-label="20"
+                                  icon={
+                                    <FiberManualRecord
+                                      className={classes.radioUnchecked}
+                                    />
+                                  }
+                                  checkedIcon={
+                                    <FiberManualRecord
+                                      className={classes.radioChecked}
+                                    />
+                                  }
+                                  classes={{
+                                    checked: classes.radio,
+                                    root: classes.radioRoot
+                                  }}
+                                />
+                              }
+                              classes={{
+                                label: classes.label,
+                                root: classes.labelRoot
+                              }}
+                              label="20 productos"
+                            />
+                          </div>
+                          <div
+                            className={
+                              classes.checkboxAndRadio +
+                              " " +
+                              classes.checkboxAndRadioHorizontal
+                            }
+                          >
+                            <FormControlLabel
+                              control={
+                                <Radio
+                                  checked={state.pagination.limit === 50}
+                                  onChange={() => changePaginationLimit(50)}
+                                  value="50"
+                                  name="50 por pagina"
+                                  aria-label="50"
+                                  icon={
+                                    <FiberManualRecord
+                                      className={classes.radioUnchecked}
+                                    />
+                                  }
+                                  checkedIcon={
+                                    <FiberManualRecord
+                                      className={classes.radioChecked}
+                                    />
+                                  }
+                                  classes={{
+                                    checked: classes.radio,
+                                    root: classes.radioRoot
+                                  }}
+                                />
+                              }
+                              classes={{
+                                label: classes.label,
+                                root: classes.labelRoot
+                              }}
+                              label="50 productos"
+                            />
+                          </div>
+                        </div>
+                      )
+                    }
+                  ]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem md={9} sm={8}>
+            <Loader isLoading={isLoading}>
+              <GridContainer>
+                {state.products.map((product, key) => (
+                  <GridItem md={4} sm={6} key={key}>
+                    <Card plain product>
+                      <CardHeader noShadow image>
+                        <a href={product.permalink}>
+                          <div
+                            style={{
+                              height: "200px",
+                              backgroundSize: "contain",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPositionX: "center",
+                              backgroundPositionY: "center",
+                              backgroundImage: `url(${product.pictures[0].url})`
+                            }}
+                          />
+                        </a>
+                      </CardHeader>
+                      <CardBody plain className={classes.cardBody}>
+                        <a href="{product.permalink">
+                          <h4 className={classes.cardTitle}>{product.title}</h4>
+                        </a>
+                        <p className={classes.description}>
+                          <Badge color="info" className={classes.blueBadge}>
+                            Envío con normalidad
+                          </Badge>
+                        </p>
+                      </CardBody>
+                      <CardFooter
+                        plain
+                        className={classes.justifyContentBetween}
                       >
-                        <Button
-                          justIcon
-                          simple
-                          color="rose"
-                          className={classes.pullRight}
-                          onClick={() =>
-                            (window.location.href = product.permalink)
-                          }
+                        <div className={classes.priceContainer}>
+                          <span className={classes.price}>
+                            ${product.price}
+                          </span>
+                        </div>
+                        <Tooltip
+                          id="tooltip-top"
+                          title="¡Lo quiero!"
+                          placement="left"
+                          classes={{ tooltip: classes.tooltip }}
                         >
-                          <ShoppingCart />
-                        </Button>
-                      </Tooltip>
-                    </CardFooter>
-                  </Card>
-                </GridItem>
-              ))}
-            </GridContainer>
+                          <Button
+                            justIcon
+                            simple
+                            color="rose"
+                            className={classes.pullRight}
+                            onClick={() =>
+                              (window.location.href = product.permalink)
+                            }
+                          >
+                            <ShoppingCart />
+                          </Button>
+                        </Tooltip>
+                      </CardFooter>
+                    </Card>
+                  </GridItem>
+                ))}
+              </GridContainer>
+            </Loader>
           </GridItem>
         </GridContainer>
         <Paginations
@@ -208,6 +320,7 @@ const SectionProducts = props => {
             ...page,
             onClick: () => {
               fetchProducts((page.text - 1) * state.pagination.limit);
+              window.scrollTo(0, productsRef.current.offsetParent.offsetTop);
             }
           }))}
           color="success"
@@ -217,13 +330,4 @@ const SectionProducts = props => {
   );
 };
 
-SectionProducts.propTypes = {
-  setIsLoading: PropTypes.func
-};
-
-SectionProducts.defaultProps = {
-  setIsLoading: () => {}
-};
-
-//export default withLoader(SectionProducts);
 export default SectionProducts;
