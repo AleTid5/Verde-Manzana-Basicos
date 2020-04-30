@@ -4,20 +4,15 @@ import React from "react";
 // plugin that creates slider
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 // @material-ui icons
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import Radio from "@material-ui/core/Radio";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import Button from "components/CustomButtons/Button.js";
 import Accordion from "components/Accordion/Accordion.js";
 
 // Server
@@ -25,9 +20,8 @@ import { getProducts } from "../../../api/EcommerceServer";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.js";
 import Paginations from "../../../components/Pagination/Pagination";
-import Loader from "./Loader";
-import Badge from "../../../components/Badge/Badge";
-import Carousel from "react-slick";
+import Product from "./Product";
+import ProductSkeleton from "./ProductSkeleton";
 
 const useStyles = makeStyles(styles);
 
@@ -254,79 +248,16 @@ const SectionProducts = () => {
             </Card>
           </GridItem>
           <GridItem md={9} sm={8}>
-            <Loader isLoading={isLoading}>
-              <GridContainer>
+            <GridContainer>
+              <ProductSkeleton
+                isLoading={isLoading}
+                productsLoading={state.pagination.limit}
+              >
                 {state.products.map((product, key) => (
-                  <GridItem md={4} sm={6} key={key}>
-                    <Card plain product>
-                      <CardHeader noShadow image>
-                        <a href={product.permalink}>
-                          <Carousel
-                            dots={true}
-                            infinite={true}
-                            speed={1000}
-                            slidesToShow={1}
-                            slidesToScroll={1}
-                            autoplay={true}
-                          >
-                            {product.pictures.map(picture => (
-                              <div
-                                className={classes.carouselPictureContainer}
-                                key={picture.id}
-                              >
-                                <img
-                                  src={picture.url}
-                                  alt="Second slide"
-                                  className={`slick-image ${classes.carouselPicture}`}
-                                />
-                              </div>
-                            ))}
-                          </Carousel>
-                        </a>
-                      </CardHeader>
-                      <CardBody plain className={classes.cardBody}>
-                        <a href="{product.permalink">
-                          <h4 className={classes.cardTitle}>{product.title}</h4>
-                        </a>
-                        <p className={classes.description}>
-                          <Badge color="info" className={classes.blueBadge}>
-                            Envío con normalidad
-                          </Badge>
-                        </p>
-                      </CardBody>
-                      <CardFooter
-                        plain
-                        className={classes.justifyContentBetween}
-                      >
-                        <div className={classes.priceContainer}>
-                          <span className={classes.price}>
-                            ${product.price}
-                          </span>
-                        </div>
-                        <Tooltip
-                          id="tooltip-top"
-                          title="¡Lo quiero!"
-                          placement="left"
-                          classes={{ tooltip: classes.tooltip }}
-                        >
-                          <Button
-                            justIcon
-                            simple
-                            color="rose"
-                            className={classes.pullRight}
-                            onClick={() =>
-                              (window.location.href = product.permalink)
-                            }
-                          >
-                            <ShoppingCart />
-                          </Button>
-                        </Tooltip>
-                      </CardFooter>
-                    </Card>
-                  </GridItem>
+                  <Product product={product} key={key} />
                 ))}
-              </GridContainer>
-            </Loader>
+              </ProductSkeleton>
+            </GridContainer>
           </GridItem>
         </GridContainer>
         <Paginations

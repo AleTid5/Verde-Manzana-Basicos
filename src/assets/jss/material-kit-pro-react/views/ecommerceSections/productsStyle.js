@@ -121,28 +121,6 @@ const styles = {
     zIndex: 10,
     color: "white"
   },
-  loader: {
-    display: "inline-block",
-    position: "relative",
-    width: "80px",
-    height: "80px",
-    marginTop: "30%",
-    left: "45%"
-  },
-  loaderChild1: {
-    position: "absolute",
-    border: "4px solid #fff",
-    opacity: 1,
-    borderRadius: "50%",
-    animation: `$loader 1s cubic-bezier(0, 0.2, 0.8, 1) infinite`
-  },
-  loaderChild2: {
-    animationDelay: "-0.5s"
-  },
-  "@keyframes loader": {
-    "0%": { top: "36px", left: "36px", width: 0, height: 0, opacity: 1 },
-    "100%": { top: 0, left: 0, width: "72px", height: "72px", opacity: 0 }
-  },
   fetchingProducts: {
     position: "relative",
     marginLeft: "calc(45% - 35px)"
@@ -166,6 +144,16 @@ const styles = {
     height: "100%",
     objectFit: "contain",
     borderRadius: "5px"
+  },
+  titleSkeleton: {
+    display: "block",
+    backgroundColor: "#ccc"
+  },
+  priceSkeleton: {
+    backgroundColor: "#ccc",
+    width: "60px",
+    marginBottom: "3px",
+    display: "inline-flex"
   }
 };
 
