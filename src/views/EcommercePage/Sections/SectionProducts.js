@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 // nodejs library that concatenates classes
 // plugin that creates slider
@@ -28,6 +27,7 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/pr
 import Paginations from "../../../components/Pagination/Pagination";
 import Loader from "./Loader";
 import Badge from "../../../components/Badge/Badge";
+import Carousel from "react-slick";
 
 const useStyles = makeStyles(styles);
 
@@ -50,14 +50,14 @@ const reducer = (state, action) => {
         parseInt(action.pagination.total / action.pagination.limit) + 1;
       const pages = [];
 
-      [...Array(totalPages).keys()].map(page => {
+      [...Array(totalPages).keys()].map(page =>
         pages.push({
           text: page + 1,
           active:
             parseInt(action.pagination.offset / action.pagination.limit) ===
             page
-        });
-      });
+        })
+      );
 
       return {
         ...state,
@@ -73,6 +73,9 @@ const reducer = (state, action) => {
           limit: action.limit
         }
       };
+    }
+    default: {
+      return state;
     }
   }
 };
@@ -258,16 +261,27 @@ const SectionProducts = () => {
                     <Card plain product>
                       <CardHeader noShadow image>
                         <a href={product.permalink}>
-                          <div
-                            style={{
-                              height: "200px",
-                              backgroundSize: "contain",
-                              backgroundRepeat: "no-repeat",
-                              backgroundPositionX: "center",
-                              backgroundPositionY: "center",
-                              backgroundImage: `url(${product.pictures[0].url})`
-                            }}
-                          />
+                          <Carousel
+                            dots={true}
+                            infinite={true}
+                            speed={1000}
+                            slidesToShow={1}
+                            slidesToScroll={1}
+                            autoplay={true}
+                          >
+                            {product.pictures.map(picture => (
+                              <div
+                                className={classes.carouselPictureContainer}
+                                key={picture.id}
+                              >
+                                <img
+                                  src={picture.url}
+                                  alt="Second slide"
+                                  className={`slick-image ${classes.carouselPicture}`}
+                                />
+                              </div>
+                            ))}
+                          </Carousel>
                         </a>
                       </CardHeader>
                       <CardBody plain className={classes.cardBody}>

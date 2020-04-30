@@ -11,7 +11,7 @@ import {
 import customCheckboxRadioSwitch from "assets/jss/material-kit-pro-react/customCheckboxRadioSwitchStyle.js";
 
 import tooltipsStyle from "assets/jss/material-kit-pro-react/tooltipsStyle.js";
-import { primaryColor, successColor } from "assets/jss/material-kit-pro-react";
+import { successColor } from "assets/jss/material-kit-pro-react";
 
 const styles = {
   ...customCheckboxRadioSwitch,
@@ -158,6 +158,14 @@ const styles = {
     ...customCheckboxRadioSwitch.radioChecked,
     border: `1px solid ${successColor[0]}`,
     color: `${successColor[0]} !important`
+  },
+  carouselPictureContainer: {
+    height: "200px"
+  },
+  carouselPicture: {
+    height: "100%",
+    objectFit: "contain",
+    borderRadius: "5px"
   }
 };
 
