@@ -20,10 +20,9 @@ const useStyles = makeStyles(styles);
 export default function Product({ product }) {
   const classes = useStyles();
   const { pushEvent } = React.useContext(GoogleAnalyticsContext);
-  const [
-    imageToDisplayFullscreen,
-    setImageToDisplayFullscreen
-  ] = React.useState(null);
+  const [initialFullscreenSlide, setInitialFullscreenSlide] = React.useState(
+    null
+  );
 
   const FullscreenCarousel = () => {
     React.useEffect(() => {
@@ -31,27 +30,27 @@ export default function Product({ product }) {
         event.preventDefault();
         if (event.keyCode === 27) {
           document.body.style.overflow = "auto";
-          setImageToDisplayFullscreen(null);
+          setInitialFullscreenSlide(null);
         }
       };
 
-      if (imageToDisplayFullscreen !== null) {
+      if (initialFullscreenSlide !== null) {
         document.addEventListener("keydown", escFunction, false);
       }
 
       return () => {
         document.removeEventListener("keydown", escFunction, false);
       };
-    }, [imageToDisplayFullscreen]);
+    }, [initialFullscreenSlide]);
 
     return (
-      imageToDisplayFullscreen !== null && (
+      initialFullscreenSlide !== null && (
         <div className={classes.fullscreenCarousel}>
           <div
             className={classes.closable}
             onClick={() => {
               document.body.style.overflow = "auto";
-              setImageToDisplayFullscreen(null);
+              setInitialFullscreenSlide(null);
             }}
           />
           <div className={classes.closeFullscreen}>
@@ -65,11 +64,12 @@ export default function Product({ product }) {
               slidesToShow={1}
               slidesToScroll={1}
               autoplay={false}
+              initialSlide={initialFullscreenSlide}
             >
               {product.pictures.map((picture, key) => (
                 <div key={key}>
                   <img
-                    src={product.pictures[imageToDisplayFullscreen].url}
+                    src={picture.url}
                     alt="..."
                     className={`slick-image ${classes.fullscreenImage}`}
                   />
@@ -93,7 +93,7 @@ export default function Product({ product }) {
             speed={1000}
             slidesToShow={1}
             slidesToScroll={1}
-            autoplay={!imageToDisplayFullscreen}
+            autoplay={!initialFullscreenSlide}
           >
             {product.pictures.map((picture, key) => (
               <div
@@ -101,7 +101,7 @@ export default function Product({ product }) {
                 className={classes.carouselPictureContainer}
                 onClick={() => {
                   document.body.style.overflow = "hidden";
-                  setImageToDisplayFullscreen(key);
+                  setInitialFullscreenSlide(key);
                 }}
               >
                 <img
