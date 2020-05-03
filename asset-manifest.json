@@ -1,31 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.35dc6bf6.chunk.css",
-    "main.js": "/static/js/main.124e3112.chunk.js",
-    "main.js.map": "/static/js/main.124e3112.chunk.js.map",
+    "main.js": "/static/js/main.99cea003.chunk.js",
+    "main.js.map": "/static/js/main.99cea003.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.67dc9971.js",
     "runtime~main.js.map": "/static/js/runtime~main.67dc9971.js.map",
-    "static/js/2.ce7b6e45.chunk.js": "/static/js/2.ce7b6e45.chunk.js",
-    "static/js/2.ce7b6e45.chunk.js.map": "/static/js/2.ce7b6e45.chunk.js.map",
+    "static/js/2.ee497f8f.chunk.js": "/static/js/2.ee497f8f.chunk.js",
+    "static/js/2.ee497f8f.chunk.js.map": "/static/js/2.ee497f8f.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.fee2c51095f90654270e8a1e0adad126.js": "/precache-manifest.fee2c51095f90654270e8a1e0adad126.js",
+    "precache-manifest.c11b229c8ad24dac832770914c67615b.js": "/precache-manifest.c11b229c8ad24dac832770914c67615b.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.35dc6bf6.chunk.css.map": "/static/css/main.35dc6bf6.chunk.css.map",
-    "static/media/Background.JPG": "/static/media/Background.25c47606.JPG",
-    "static/media/card-profile1-square.jpg": "/static/media/card-profile1-square.3122abf4.jpg",
-    "static/media/card-profile2-square.jpg": "/static/media/card-profile2-square.788e3d36.jpg",
-    "static/media/card-profile4-square.jpg": "/static/media/card-profile4-square.1a164917.jpg",
-    "static/media/card-profile5-square.jpg": "/static/media/card-profile5-square.c6d2a432.jpg",
-    "static/media/card-profile6-square.jpg": "/static/media/card-profile6-square.1f1f4900.jpg",
-    "static/media/christian.jpg": "/static/media/christian.b23f7205.jpg",
-    "static/media/dg10.jpg": "/static/media/dg10.38704689.jpg",
-    "static/media/dg6.jpg": "/static/media/dg6.295693c8.jpg",
-    "static/media/dg9.jpg": "/static/media/dg9.0de9e85d.jpg",
-    "static/media/dolce.jpg": "/static/media/dolce.943ac1d6.jpg",
-    "static/media/ecommerce-header.jpg": "/static/media/ecommerce-header.7cdeae31.jpg",
-    "static/media/gucci.jpg": "/static/media/gucci.d0cbed6f.jpg",
-    "static/media/kendall.jpg": "/static/media/kendall.5a0e395b.jpg",
-    "static/media/marc.jpg": "/static/media/marc.101b9dc3.jpg",
-    "static/media/tom-ford.jpg": "/static/media/tom-ford.404803b0.jpg"
+    "static/media/Background.JPG": "/static/media/Background.25c47606.JPG"
   }
 }
