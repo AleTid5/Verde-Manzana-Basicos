@@ -184,6 +184,9 @@ const styles = {
     top: "0",
     width: "100%",
     height: "100vh"
+  },
+  fullscreenCarouselContainer: {
+    maxWidth: "40vh"
   }
 };
 

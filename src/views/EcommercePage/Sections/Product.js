@@ -54,20 +54,29 @@ export default function Product({ product }) {
               setImageToDisplayFullscreen(null);
             }}
           />
-          <div
-            className={classes.closeFullscreen}
-            onClick={() => {
-              document.body.style.overflow = "auto";
-              setImageToDisplayFullscreen(null);
-            }}
-          >
+          <div className={classes.closeFullscreen}>
             <Close />
           </div>
-          <img
-            src={product.pictures[imageToDisplayFullscreen].url}
-            alt="..."
-            className={classes.fullscreenImage}
-          />
+          <div className={classes.fullscreenCarouselContainer}>
+            <Carousel
+              dots={true}
+              infinite={true}
+              speed={1000}
+              slidesToShow={1}
+              slidesToScroll={1}
+              autoplay={false}
+            >
+              {product.pictures.map((picture, key) => (
+                <div key={key}>
+                  <img
+                    src={product.pictures[imageToDisplayFullscreen].url}
+                    alt="..."
+                    className={`slick-image ${classes.fullscreenImage}`}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </div>
         </div>
       )
     );
