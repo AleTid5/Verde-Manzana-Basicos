@@ -138,7 +138,8 @@ const styles = {
     color: `${successColor[0]} !important`
   },
   carouselPictureContainer: {
-    height: "200px"
+    height: "200px",
+    cursor: "pointer"
   },
   carouselPicture: {
     height: "100%",
@@ -154,6 +155,35 @@ const styles = {
     width: "60px",
     marginBottom: "3px",
     display: "inline-flex"
+  },
+  fullscreenCarousel: {
+    position: "fixed",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "100vh",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    zIndex: 6,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  closeFullscreen: {
+    position: "absolute",
+    top: "100px",
+    right: "35px",
+    color: "white",
+    cursor: "pointer"
+  },
+  fullscreenImage: {
+    zIndex: 1
+  },
+  closable: {
+    position: "fixed",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "100vh"
   }
 };
 

@@ -56,13 +56,14 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
-  const { color, links, brand, fixed, absolute } = props;
+  const { color, links, brand, fixed, absolute, withMobileSidebar } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
     [classes.fixed]: fixed
   });
+
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -72,15 +73,17 @@ export default function Header(props) {
         <Hidden smDown implementation="css" className={classes.hidden}>
           <div className={classes.collapse}>{links}</div>
         </Hidden>
-        <Hidden mdUp>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
+        {withMobileSidebar && (
+          <Hidden mdUp>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerToggle}
+            >
+              <Menu />
+            </IconButton>
+          </Hidden>
+        )}
       </Toolbar>
       <Hidden mdUp implementation="js">
         <Drawer
@@ -108,7 +111,8 @@ export default function Header(props) {
 }
 
 Header.defaultProp = {
-  color: "white"
+  color: "white",
+  withMobileSidebar: true
 };
 
 Header.propTypes = {
@@ -146,5 +150,6 @@ Header.propTypes = {
       "rose",
       "dark"
     ]).isRequired
-  })
+  }),
+  withMobileSidebar: PropTypes.bool
 };
