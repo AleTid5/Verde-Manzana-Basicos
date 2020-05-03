@@ -22,6 +22,7 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/pr
 import Paginations from "../../../components/Pagination/Pagination";
 import Product from "./Product";
 import ProductSkeleton from "./ProductSkeleton";
+import { GoogleAnalyticsContext } from "../../../components/Contexts/GoogleAnalyticsContext";
 
 const useStyles = makeStyles(styles);
 
@@ -77,15 +78,21 @@ const reducer = (state, action) => {
 const SectionProducts = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  const { pushEvent } = React.useContext(GoogleAnalyticsContext);
 
   React.useEffect(() => {
+    pushEvent("Section Products", "Site load");
+
     fetchProducts();
   }, []);
 
   const fetchProducts = (offset = 0, limit = state.pagination.limit) => {
+    const startDate = Date.now();
     setIsLoading(true);
 
     getProducts(offset, limit).then(response => {
+      const timeSpentInSeconds = (Date.now() - startDate) / 1000;
+
       const [products, pagination] = response;
 
       dispatch({
@@ -94,11 +101,26 @@ const SectionProducts = () => {
         pagination
       });
 
+      pushEvent(
+        "Section Products | Products Fetched",
+        `Fetched ${products.length} products`
+      );
+
+      pushEvent(
+        "Section Products | Time Spent Fetching",
+        `${timeSpentInSeconds} seconds have been spent`
+      );
+
       setIsLoading(false);
     });
   };
 
   const changePaginationLimit = limit => {
+    pushEvent(
+      "Section Products | Pagination Changed",
+      `From ${state.pagination.limit} to ${limit}`
+    );
+
     dispatch({
       type: "changePaginationLimit",
       limit

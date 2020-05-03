@@ -23,14 +23,17 @@ import "assets/scss/material-kit-pro-react.scss?v=1.8.0";
 
 // pages for this product
 import EcommercePage from "views/EcommercePage/EcommercePage.js";
+import { GoogleAnalyticsProvider } from "./components/Contexts/GoogleAnalyticsContext";
 
 var hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/" component={EcommercePage} />
-    </Switch>
-  </Router>,
+  <GoogleAnalyticsProvider>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/" component={EcommercePage} />
+      </Switch>
+    </Router>
+  </GoogleAnalyticsProvider>,
   document.getElementById("root")
 );

@@ -11,44 +11,43 @@ import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import GridItem from "../../../components/Grid/GridItem";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../../assets/jss/material-kit-pro-react/views/ecommerceSections/productsStyle";
+import { GoogleAnalyticsContext } from "../../../components/Contexts/GoogleAnalyticsContext";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(styles);
 
 export default function Product({ product }) {
   const classes = useStyles();
+  const { pushEvent } = React.useContext(GoogleAnalyticsContext);
 
   return (
     <GridItem md={4} sm={6}>
       <Card plain product>
         <CardHeader noShadow image>
-          <a href={product.permalink}>
-            <Carousel
-              dots={true}
-              infinite={true}
-              speed={1000}
-              slidesToShow={1}
-              slidesToScroll={1}
-              autoplay={true}
-            >
-              {product.pictures.map(picture => (
-                <div
-                  className={classes.carouselPictureContainer}
-                  key={picture.id}
-                >
-                  <img
-                    src={picture.url}
-                    alt="Second slide"
-                    className={`slick-image ${classes.carouselPicture}`}
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </a>
+          <Carousel
+            dots={true}
+            infinite={true}
+            speed={1000}
+            slidesToShow={1}
+            slidesToScroll={1}
+            autoplay={true}
+          >
+            {product.pictures.map(picture => (
+              <div
+                className={classes.carouselPictureContainer}
+                key={picture.id}
+              >
+                <img
+                  src={picture.url}
+                  alt="Second slide"
+                  className={`slick-image ${classes.carouselPicture}`}
+                />
+              </div>
+            ))}
+          </Carousel>
         </CardHeader>
         <CardBody plain className={classes.cardBody}>
-          <a href="{product.permalink">
-            <h4 className={classes.cardTitle}>{product.title}</h4>
-          </a>
+          <h4 className={classes.cardTitle}>{product.title}</h4>
           <p className={classes.description}>
             <Badge color="info" className={classes.blueBadge}>
               Envío con normalidad
@@ -70,7 +69,14 @@ export default function Product({ product }) {
               simple
               color="rose"
               className={classes.pullRight}
-              onClick={() => (window.location.href = product.permalink)}
+              onClick={() => {
+                pushEvent(
+                  "Section Products | Product Clicked",
+                  product.permalink.substr(product.permalink.indexOf(".ar") + 4)
+                );
+
+                window.location.href = product.permalink;
+              }}
             >
               <ShoppingCart />
             </Button>
@@ -80,3 +86,21 @@ export default function Product({ product }) {
     </GridItem>
   );
 }
+
+Product.propTypes = {
+  product: PropTypes.shape({
+    permalink: PropTypes.string.isRequired,
+    pictures: PropTypes.array.isRequired,
+    price: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired
+  })
+};
+
+Product.defaultProps = {
+  product: {
+    permalink: null,
+    pictures: [],
+    price: null,
+    title: null
+  }
+};
