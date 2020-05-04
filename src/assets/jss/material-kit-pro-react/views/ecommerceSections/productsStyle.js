@@ -175,8 +175,14 @@ const styles = {
     color: "white",
     cursor: "pointer"
   },
+  fullscreenImageContainer: {
+    height: "80vh"
+  },
   fullscreenImage: {
-    zIndex: 1
+    zIndex: 1,
+    height: "100%",
+    objectFit: "contain",
+    borderRadius: "5px"
   },
   closable: {
     position: "fixed",
@@ -186,7 +192,7 @@ const styles = {
     height: "100vh"
   },
   fullscreenCarouselContainer: {
-    maxWidth: "40vh"
+    maxWidth: "80%"
   }
 };
 

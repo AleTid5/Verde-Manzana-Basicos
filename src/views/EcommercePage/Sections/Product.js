@@ -52,11 +52,14 @@ export default function Product({ product }) {
               document.body.style.overflow = "auto";
               setInitialFullscreenSlide(null);
             }}
-          />
-          <div className={classes.closeFullscreen}>
-            <Close />
+          >
+            <div className={classes.closeFullscreen}>
+              <Close />
+            </div>
           </div>
-          <div className={classes.fullscreenCarouselContainer}>
+          <div
+            className={`fullscreenImage ${classes.fullscreenCarouselContainer}`}
+          >
             <Carousel
               dots={true}
               infinite={true}
@@ -67,7 +70,7 @@ export default function Product({ product }) {
               initialSlide={initialFullscreenSlide}
             >
               {product.pictures.map((picture, key) => (
-                <div key={key}>
+                <div key={key} className={classes.fullscreenImageContainer}>
                   <img
                     src={picture.url}
                     alt="..."

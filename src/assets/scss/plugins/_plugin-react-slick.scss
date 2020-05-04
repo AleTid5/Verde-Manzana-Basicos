@@ -190,6 +190,27 @@ button.slick-arrow.slick-next {
     width: 100%;
   }
 }
+
+.fullscreenImage {
+  .slick-next {
+    @extend .slick-next;
+    &::before {
+      color: #d8d8d8;
+      width: 25px;
+      background-color: #00000038;
+    }
+  }
+
+  .slick-prev {
+    @extend .slick-prev;
+    &::before {
+      color: #d8d8d8;
+      width: 25px;
+      background-color: #00000038;
+    }
+  }
+}
+
 .slick-list {
   z-index: 1;
 }
