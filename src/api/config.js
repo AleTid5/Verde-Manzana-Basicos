@@ -4,7 +4,8 @@ export default {
     baseURL: "https://api.mercadolibre.com",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     }
   }
 };
