@@ -192,22 +192,27 @@ button.slick-arrow.slick-next {
 }
 
 .fullscreenImage {
-  .slick-next {
-    @extend .slick-next;
+  .slick-prev, .slick-next {
+    position: fixed!important;
+    width: 8%!important;
+    height: 0!important;
+
     &::before {
       color: #d8d8d8;
       width: 25px;
-      background-color: #00000038;
     }
   }
 
   .slick-prev {
-    @extend .slick-prev;
-    &::before {
-      color: #d8d8d8;
-      width: 25px;
-      background-color: #00000038;
-    }
+    left: 0!important;
+  }
+
+  .slick-next {
+    right: 0!important;
+  }
+
+  img {
+    cursor: pointer;
   }
 }
 
