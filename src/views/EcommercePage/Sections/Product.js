@@ -36,9 +36,11 @@ export default function Product({ product }) {
 
       if (initialFullscreenSlide !== null) {
         document.addEventListener("keydown", escFunction, false);
+        document.getElementById("main-header").style.display = "none";
       }
 
       return () => {
+        document.getElementById("main-header").style.display = "block";
         document.removeEventListener("keydown", escFunction, false);
       };
     }, [initialFullscreenSlide]);

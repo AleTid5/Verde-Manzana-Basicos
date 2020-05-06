@@ -177,7 +177,10 @@ const styles = {
     cursor: "pointer"
   },
   fullscreenImageContainer: {
-    height: "80vh"
+    height: "80vh",
+    display: "flex!important",
+    alignItems: "center",
+    justifyContent: "center"
   },
   fullscreenImage: {
     zIndex: 1,

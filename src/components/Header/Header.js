@@ -65,7 +65,7 @@ export default function Header(props) {
   });
 
   return (
-    <AppBar className={appBarClasses}>
+    <AppBar className={appBarClasses} id="main-header">
       <Toolbar className={classes.container}>
         <Button className={classes.title}>
           <Link to="/">{brand}</Link>

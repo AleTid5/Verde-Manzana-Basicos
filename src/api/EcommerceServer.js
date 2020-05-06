@@ -15,7 +15,9 @@ const getProducts = async (offset, limit) =>
             .get(`/items/${result.id}`)
             .then(({ data: { pictures } }) => ({
               ...result,
-              pictures
+              pictures: pictures.map(picture => ({
+                url: picture.secure_url.replace("-O.jpg", "-F.jpg")
+              }))
             }))
         )
       ).then(resolvedResults => [resolvedResults, paging])
