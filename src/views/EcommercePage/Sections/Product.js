@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../../assets/jss/material-kit-pro-react/views/ecommerceSections/productsStyle";
 import { GoogleAnalyticsContext } from "../../../components/Contexts/GoogleAnalyticsContext";
 import PropTypes from "prop-types";
+import FloatingButton from "../../../components/FloatingButton/FloatingButton";
 
 const useStyles = makeStyles(styles);
 
@@ -23,6 +24,15 @@ export default function Product({ product }) {
   const [initialFullscreenSlide, setInitialFullscreenSlide] = React.useState(
     null
   );
+
+  const onProductClicked = () => {
+    pushEvent(
+      "Section Products | Product Clicked",
+      product.permalink.substr(product.permalink.indexOf(".ar") + 4)
+    );
+
+    window.open(product.permalink, "_blank");
+  };
 
   const FullscreenCarousel = () => {
     React.useEffect(() => {
@@ -82,6 +92,7 @@ export default function Product({ product }) {
               ))}
             </Carousel>
           </div>
+          <FloatingButton onClick={onProductClicked} />
         </div>
       )
     );
@@ -141,14 +152,7 @@ export default function Product({ product }) {
               simple
               color="rose"
               className={classes.pullRight}
-              onClick={() => {
-                pushEvent(
-                  "Section Products | Product Clicked",
-                  product.permalink.substr(product.permalink.indexOf(".ar") + 4)
-                );
-
-                window.location.href = product.permalink;
-              }}
+              onClick={onProductClicked}
             >
               <ShoppingCart />
             </Button>
