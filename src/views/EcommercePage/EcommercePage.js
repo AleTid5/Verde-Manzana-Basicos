@@ -14,6 +14,11 @@ import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
 import { makeStyles } from "@material-ui/core/styles";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Hidden from "@material-ui/core/Hidden";
+import Search from "@material-ui/icons/Search";
+import CustomInput from "../../components/CustomInput/CustomInput";
+import mainIcon from "assets/img/MainIcon.png";
 
 const useStyles = makeStyles(styles);
 
@@ -28,7 +33,16 @@ export default function EcommercePage() {
   return (
     <div>
       <Header
-        brand="Verde Manzana Básicos"
+        brand={
+          <>
+            <Hidden xsDown implementation="css" className={classes.hidden}>
+              Verde Manzana Básicos
+            </Hidden>
+            <Hidden smUp implementation="css" className={classes.hidden}>
+              <img src={mainIcon} alt="..." width="40px" />
+            </Hidden>
+          </>
+        }
         fixed
         color="transparent"
         changeColorOnScroll={{
@@ -36,6 +50,30 @@ export default function EcommercePage() {
           color: "success"
         }}
         withMobileSidebar={false}
+        links={
+          <GridContainer>
+            <GridItem xs={2} sm={4} md={4} lg={6} />
+            <GridItem xs={10} sm={8} md={8} lg={6}>
+              <CustomInput
+                white
+                labelText="Buscar productos..."
+                id="material"
+                formControlProps={{
+                  fullWidth: true,
+                  className: classes.whiteColor
+                }}
+                inputProps={{
+                  white: true,
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Search />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </GridItem>
+          </GridContainer>
+        }
       />
       <Parallax
         image={require("assets/img/sections/E-Commerce/Background.JPG")}

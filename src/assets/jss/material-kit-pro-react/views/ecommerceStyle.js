@@ -132,6 +132,9 @@ const styles = {
     textDecoration: "none",
     position: "relative",
     display: "block"
+  },
+  pullRight: {
+    textAlign: "right"
   }
 };
 

@@ -70,9 +70,9 @@ export default function Header(props) {
         <Button className={classes.title}>
           <Link to="/">{brand}</Link>
         </Button>
-        <Hidden smDown implementation="css" className={classes.hidden}>
-          <div className={classes.collapse}>{links}</div>
-        </Hidden>
+        <div className={`${classes.collapse} ${classes.displayBlock}`}>
+          {links}
+        </div>
         {withMobileSidebar && (
           <Hidden mdUp>
             <IconButton
