@@ -23,12 +23,21 @@ import mainIcon from "assets/img/MainIcon.png";
 const useStyles = makeStyles(styles);
 
 export default function EcommercePage() {
+  const [isFetchingProducts, setIsFetchingProducts] = React.useState(false);
+  const [productSearch, setProductSearch] = React.useState(null);
+  const searchBoxRef = React.useRef();
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-  });
+  }, []);
 
   const classes = useStyles();
+
+  const findProductBySearch = () => {
+    setIsFetchingProducts(true);
+    setProductSearch(searchBoxRef.current.children[0].value);
+  };
 
   return (
     <div>
@@ -59,16 +68,20 @@ export default function EcommercePage() {
                 labelText="Buscar productos..."
                 id="material"
                 formControlProps={{
-                  fullWidth: true,
-                  className: classes.whiteColor
+                  fullWidth: true
                 }}
                 inputProps={{
-                  white: true,
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment
+                      position="end"
+                      onClick={findProductBySearch}
+                      className={classes.clickable}
+                    >
                       <Search />
                     </InputAdornment>
-                  )
+                  ),
+                  ref: searchBoxRef,
+                  onKeyUp: e => e.keyCode === 13 && findProductBySearch()
                 }}
               />
             </GridItem>
@@ -103,7 +116,10 @@ export default function EcommercePage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionProducts />
+        <SectionProducts
+          isFetchingProducts={isFetchingProducts}
+          productSearch={productSearch}
+        />
       </div>
 
       <Footer

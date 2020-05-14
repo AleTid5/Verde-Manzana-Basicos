@@ -135,6 +135,9 @@ const styles = {
   },
   pullRight: {
     textAlign: "right"
+  },
+  clickable: {
+    cursor: "pointer"
   }
 };
 
