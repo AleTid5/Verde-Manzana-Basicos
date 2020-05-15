@@ -22,8 +22,8 @@ export default function ProductNotFound() {
 
   return (
     <>
-      <GridItem xs={3} />
-      <GridItem xs={6}>
+      <GridItem md={3} />
+      <GridItem xs={12} sm={12} md={6}>
         <Card plain product>
           <CardHeader noShadow image>
             <Carousel>
