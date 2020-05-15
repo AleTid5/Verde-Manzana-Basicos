@@ -79,6 +79,7 @@ export default function EcommercePage() {
                   fullWidth: true
                 }}
                 inputProps={{
+                  disabled: isFetchingProducts,
                   endAdornment:
                     isFetchingProducts ||
                     (searchBoxRef.current &&

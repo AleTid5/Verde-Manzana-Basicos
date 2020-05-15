@@ -23,13 +23,14 @@ import Paginations from "../../../components/Pagination/Pagination";
 import Product from "./Product";
 import ProductSkeleton from "./ProductSkeleton";
 import { GoogleAnalyticsContext } from "../../../components/Contexts/GoogleAnalyticsContext";
+import ProductNotFound from "./ProductNotFound";
 
 const useStyles = makeStyles(styles);
 
 const productsRef = React.createRef();
 
 const initialState = {
-  pagination: {
+  paging: {
     limit: 20,
     offset: 0,
     pages: [],
@@ -42,29 +43,30 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "fetchProducts": {
       const totalPages =
-        parseInt(action.pagination.total / action.pagination.limit) + 1;
+        parseInt(action.paging.total / action.paging.limit) + 1;
       const pages = [];
 
-      [...Array(totalPages).keys()].map(page =>
-        pages.push({
-          text: page + 1,
-          active:
-            parseInt(action.pagination.offset / action.pagination.limit) ===
-            page
-        })
+      [...Array(totalPages).keys()].map(
+        page =>
+          action.products.length > 0 &&
+          pages.push({
+            text: page + 1,
+            active:
+              parseInt(action.paging.offset / action.paging.limit) === page
+          })
       );
 
       return {
         ...state,
         products: action.products,
-        pagination: { ...action.pagination, pages }
+        paging: { ...action.paging, pages }
       };
     }
     case "changePaginationLimit": {
       return {
         ...state,
-        pagination: {
-          ...state.pagination,
+        paging: {
+          ...state.paging,
           limit: action.limit
         }
       };
@@ -95,8 +97,8 @@ const SectionProducts = ({
   }, [isFetchingProducts]);
 
   const fetchProducts = (
-    offset = state.pagination.offset,
-    limit = state.pagination.limit
+    offset = state.paging.offset,
+    limit = state.paging.limit
   ) => {
     const startDate = Date.now();
     setIsLoading(true);
@@ -104,12 +106,12 @@ const SectionProducts = ({
     getProducts(offset, limit, productSearch).then(response => {
       const timeSpentInSeconds = (Date.now() - startDate) / 1000;
 
-      const [products, pagination] = response;
+      const { products, paging } = response;
 
       dispatch({
         type: "fetchProducts",
         products,
-        pagination
+        paging
       });
 
       pushEvent(
@@ -130,7 +132,7 @@ const SectionProducts = ({
   const changePaginationLimit = limit => {
     pushEvent(
       "Section Products | Pagination Changed",
-      `From ${state.pagination.limit} to ${limit}`
+      `From ${state.paging.limit} to ${limit}`
     );
 
     dispatch({
@@ -138,7 +140,7 @@ const SectionProducts = ({
       limit
     });
 
-    fetchProducts(state.pagination.offset, limit);
+    fetchProducts(state.paging.offset, limit);
   };
 
   const classes = useStyles();
@@ -156,7 +158,7 @@ const SectionProducts = ({
                   activeColor="success"
                   collapses={[
                     {
-                      title: `Productos por pagina (${state.pagination.limit})`,
+                      title: `Productos por pagina (${state.paging.limit})`,
                       content: (
                         <div>
                           <div
@@ -169,7 +171,7 @@ const SectionProducts = ({
                             <FormControlLabel
                               control={
                                 <Radio
-                                  checked={state.pagination.limit === 10}
+                                  checked={state.paging.limit === 10}
                                   onChange={() => changePaginationLimit(10)}
                                   value="10"
                                   name="10 por pagina"
@@ -207,7 +209,7 @@ const SectionProducts = ({
                             <FormControlLabel
                               control={
                                 <Radio
-                                  checked={state.pagination.limit === 20}
+                                  checked={state.paging.limit === 20}
                                   onChange={() => changePaginationLimit(20)}
                                   value="20"
                                   name="20 por pagina"
@@ -245,7 +247,7 @@ const SectionProducts = ({
                             <FormControlLabel
                               control={
                                 <Radio
-                                  checked={state.pagination.limit === 50}
+                                  checked={state.paging.limit === 50}
                                   onChange={() => changePaginationLimit(50)}
                                   value="50"
                                   name="50 por pagina"
@@ -285,20 +287,24 @@ const SectionProducts = ({
             <GridContainer>
               <ProductSkeleton
                 isLoading={isLoading}
-                productsLoading={state.pagination.limit}
+                productsLoading={state.paging.limit}
               >
-                {state.products.map((product, key) => (
-                  <Product product={product} key={key} />
-                ))}
+                {state.products.length > 0 ? (
+                  state.products.map((product, key) => (
+                    <Product product={product} key={key} />
+                  ))
+                ) : (
+                  <ProductNotFound />
+                )}
               </ProductSkeleton>
             </GridContainer>
           </GridItem>
         </GridContainer>
         <Paginations
-          pages={state.pagination.pages.map(page => ({
+          pages={state.paging.pages.map(page => ({
             ...page,
             onClick: () => {
-              fetchProducts((page.text - 1) * state.pagination.limit);
+              fetchProducts((page.text - 1) * state.paging.limit);
               window.scrollTo(0, productsRef.current.offsetParent.offsetTop);
             }
           }))}

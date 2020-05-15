@@ -197,6 +197,13 @@ const styles = {
   },
   fullscreenCarouselContainer: {
     maxWidth: "80%"
+  },
+  productNotFoundImage: {
+    filter: "grayscale(1)",
+    opacity: 0.75
+  },
+  productNotFoundCarouselPictureContainer: {
+    height: "110px"
   }
 };
 

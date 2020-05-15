@@ -24,7 +24,7 @@ const getProducts = async (offset, limit, productsToSearch) => {
               }))
             }))
         )
-      ).then(resolvedResults => [resolvedResults, paging])
+      ).then(products => ({ products, paging }))
     );
 };
 
