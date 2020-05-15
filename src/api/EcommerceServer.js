@@ -1,12 +1,16 @@
 import axios from "axios";
 import config from "./config";
 
-const getProducts = async (offset, limit) =>
-  axios
+const getProducts = async (offset, limit, productsToSearch) => {
+  let query = `/sites/MLA/search?seller_id=${config.sellerId}&offset=${offset}&limit=${limit}`;
+
+  if (productsToSearch !== null && productsToSearch !== "") {
+    query += `&q=${productsToSearch}`;
+  }
+
+  return axios
     .create(config.axiosConfig)
-    .get(
-      `/sites/MLA/search?seller_id=${config.sellerId}&offset=${offset}&limit=${limit}`
-    )
+    .get(query)
     .then(({ data: { results, paging } }) =>
       Promise.all(
         results.map(result =>
@@ -22,5 +26,6 @@ const getProducts = async (offset, limit) =>
         )
       ).then(resolvedResults => [resolvedResults, paging])
     );
+};
 
 export { getProducts };

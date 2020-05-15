@@ -17,6 +17,7 @@ import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Hidden from "@material-ui/core/Hidden";
 import Search from "@material-ui/icons/Search";
+import Close from "@material-ui/icons/Close";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import mainIcon from "assets/img/MainIcon.png";
 
@@ -37,6 +38,13 @@ export default function EcommercePage() {
   const findProductBySearch = () => {
     setIsFetchingProducts(true);
     setProductSearch(searchBoxRef.current.children[0].value);
+    searchBoxRef.current.children[0].blur();
+  };
+
+  const clearSearch = () => {
+    setIsFetchingProducts(false);
+    searchBoxRef.current.children[0].value = "";
+    setProductSearch(null);
   };
 
   return (
@@ -71,16 +79,28 @@ export default function EcommercePage() {
                   fullWidth: true
                 }}
                 inputProps={{
-                  endAdornment: (
-                    <InputAdornment
-                      position="end"
-                      onClick={findProductBySearch}
-                      className={classes.clickable}
-                    >
-                      <Search />
-                    </InputAdornment>
-                  ),
+                  endAdornment:
+                    isFetchingProducts ||
+                    (searchBoxRef.current &&
+                      searchBoxRef.current.children[0].value !== "") ? (
+                      <InputAdornment
+                        position="end"
+                        onClick={clearSearch}
+                        className={classes.clickable}
+                      >
+                        <Close />
+                      </InputAdornment>
+                    ) : (
+                      <InputAdornment
+                        position="end"
+                        onClick={findProductBySearch}
+                        className={classes.clickable}
+                      >
+                        <Search />
+                      </InputAdornment>
+                    ),
                   ref: searchBoxRef,
+                  onChange: e => e.target.value === "" && clearSearch(),
                   onKeyUp: e => e.keyCode === 13 && findProductBySearch()
                 }}
               />
@@ -119,6 +139,7 @@ export default function EcommercePage() {
         <SectionProducts
           isFetchingProducts={isFetchingProducts}
           productSearch={productSearch}
+          productsFetched={() => setIsFetchingProducts(false)}
         />
       </div>
 

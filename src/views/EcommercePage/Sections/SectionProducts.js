@@ -75,7 +75,11 @@ const reducer = (state, action) => {
   }
 };
 
-const SectionProducts = ({ isFetchingProducts, productSearch }) => {
+const SectionProducts = ({
+  isFetchingProducts,
+  productSearch,
+  productsFetched
+}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { pushEvent } = React.useContext(GoogleAnalyticsContext);
@@ -87,16 +91,17 @@ const SectionProducts = ({ isFetchingProducts, productSearch }) => {
   }, []);
 
   React.useEffect(() => {
-    setIsLoading(isFetchingProducts);
-    console.log(productSearch);
-    setTimeout(() => setIsLoading(false), 2000);
+    isFetchingProducts && fetchProducts();
   }, [isFetchingProducts]);
 
-  const fetchProducts = (offset = 0, limit = state.pagination.limit) => {
+  const fetchProducts = (
+    offset = state.pagination.offset,
+    limit = state.pagination.limit
+  ) => {
     const startDate = Date.now();
     setIsLoading(true);
 
-    getProducts(offset, limit).then(response => {
+    getProducts(offset, limit, productSearch).then(response => {
       const timeSpentInSeconds = (Date.now() - startDate) / 1000;
 
       const [products, pagination] = response;
@@ -118,6 +123,7 @@ const SectionProducts = ({ isFetchingProducts, productSearch }) => {
       );
 
       setIsLoading(false);
+      productsFetched();
     });
   };
 
